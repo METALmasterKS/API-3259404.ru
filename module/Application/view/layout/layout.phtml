@@ -1,0 +1,24 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('3259404.ru API')->setSeparator(' - ')->setAutoEscape(false);?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+    </head>
+    <body>
+	<ul class="nav navbar-nav">
+	    <li class="active"><a href="<?php echo $this->url('rashodnik') ?>">rashodnika.net</a></li>
+	</ul>
+
+            
+        
+        <div class="container">
+            <?php echo $this->content; ?>
+        </div>
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

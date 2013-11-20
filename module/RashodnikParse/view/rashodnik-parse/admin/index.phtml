@@ -1,0 +1,38 @@
+<h1>ГОСТ на JSON  расходников:)</h1>
+<ul>
+    <li><h3>user::getBrandsAction()</h3>
+        <ul>
+            <li>вернет все бренды с их id(return JSON вида- {"тут будет id бренда":"brandName"}),метод ничего не принимает</li>
+        </ul>
+    </li>
+    <li><h3>user::getTypesAction()</h3>
+        <ul>
+            <li>вернет все типы принтеров с их id(return JSON вида-{"тут будет id типа":"typeName"}),методу  необходимо передать id бренда</li>
+        </ul>
+    </li>
+    <li><h3>user::getSeriesAction()</h3>
+        <ul>
+            <li>вернет все серии принтеров,методу  необходимо передать id бренда,
+                передача idType по желанию если нужен фильтр.
+				<p>(return JSON вида-{"тут будет id серии":"название серии"})</p>
+            </li>
+        </ul>
+    </li>
+    <li><h3>user::getModelsAction()</h3>
+        <ul>
+            <li>вернет модели принтеров.
+                Методу  необходимо передать номер бренда idBrand,по желанию-idType,idSeries если нужен фильтр
+                (если передаем в метод все параметры(idBrand,idType,idSeries), то return JSON вида{id:"id принтера",p_number:"номер серии принтера"},во всех
+                остальных случаях return JSON вида{id:"id принтера",p_series:"серия принтера",p_number:"номер серии принтера"})
+            </li>
+        </ul>
+    </li>
+    <li><h3>user::getCartridgesAction()</h3>
+        <ul>
+            <li>вернет все подходящие картриджи для принтеров.
+                Методу  необходимо передать  номер модели принтера(id из табл. printers_models) -idModel.
+                (return JSON вида- {c_description:"описание картриджа",long_number:"длинный номер картриджа",short_number:"короткий номер картриджа"})
+            </li>
+        </ul>
+    </li>
+</ul>

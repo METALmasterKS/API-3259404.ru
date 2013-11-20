@@ -1,0 +1,185 @@
+<?php
+//var_dump($result);
+//var_dump($param);
+//todo вставить через composer jqueryForm
+//todo убрать id из select и работать через аттрибуты name(используешь в target:)
+$title="Найдите картридж";
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title);?></h1>
+<?php
+echo $this->form()->openTag($form);
+echo $this->formCollection($form);
+echo $this->form()->closeTag($form);
+?>
+<div id='result'></div>
+<script type="text/javascript">
+
+    $(document).ready(function(){	
+        var flag=true;
+    /*при повторной загрузке F5*/
+        //выбираем по умолчанию первый option из  #brand
+        $('#brand option:eq(0)').attr('selected', 'selected')
+        //очищаем все элементы option в select с типами и моделями,делаем эти select disabled
+        $('#type').attr('disabled','disabled');
+        $('#sendIt').attr('disabled','disabled');
+        $('#type').children('option:not(:first)').remove();
+        $('#model').attr('disabled','disabled');
+        $('#model').children('option:not(:first)').remove();
+
+var UserChoice=[];//массив в который будет приходить все данные который выберет пользователь
+/*событие на изменения в select  с #brand*/
+        $('#brand').change(function() {
+
+            var tableId=$(this).val();//value из option в котором содержится название марки принтера
+            if(!tableId){
+                $('#sendIt').attr('disabled','disabled');
+                $('#type').attr('disabled','disabled');
+                $('#type').children('option:not(:first)').remove();
+                $('#model').attr('disabled','disabled');
+                $('#model').children('option:not(:first)').remove();
+            }
+            else{
+                //var tableBrand=$(this).find("option:selected").text();
+                UserChoice=[];//очищаем массив
+                $('#sendIt').attr('disabled','disabled');
+                //вставляем выбранные значения в массив UserChoice
+                //UserChoice.push(tableId,tableBrand);
+                UserChoice.push(tableId);
+                $.ajax({
+                    url:'user/gettypes',
+                    type:'POST',
+                    dataType:'json',
+                    cache:false,
+                    data:{id:tableId},
+                    success:function(data){
+                        if(data){
+                            $('#type').removeAttr('disabled');
+                            $('#model').removeAttr('disabled');
+
+                            $('#type').children('option:not(:first)').remove();
+                            $('#model').children('option:not(:first)').remove();
+
+                            $.each(data,function(key,val){
+                                if(val.length==1){//в первый раз идет массив с обектом  у которого length=1,типы принтеров заданной марки
+                                    $.each(data[0][0],function(keyObjType,valObjType){
+                                        $('<option value="'+keyObjType+'">'+valObjType+'</option>').appendTo('#type');
+
+                                    })
+                                }
+                               else{
+                                    $.each(data[1],function(keyObj,valObj){//массив объектов из json с моделями принтеров для заданной марки
+                                        $.each(valObj,function(keyObjModel,valObjModel){
+                                            $('<option value="'+valObj.id+'">'+valObj.p_series+' ' +valObj.p_number+'</option>').appendTo('#model');
+                                            return false;
+                                        })
+                                    })
+                                }
+
+
+                            })
+                        }
+                        else{
+                            $('#type').attr('disabled','disabled');
+                            $('#model').attr('disabled','disabled');
+                            $('#sendIt').attr('disabled','disabled');
+                        }
+
+                    }
+                })
+            }
+
+
+        });
+function getBrandChoice(){
+
+}
+/*событие на изменения в select  с #type*/
+        $('#type').change(function() {
+            var tableTypeId=$(this).val();//value из option в котором содержится тип принтера
+            var str;
+            if(!tableTypeId){
+                str={idBrand:UserChoice[0]};
+            }
+            else{
+                str={idBrand:UserChoice[0],idType:tableTypeId};
+            }
+            $('#sendIt').attr('disabled','disabled');
+            $.ajax({
+                url:'user/getmodels',
+                type:'POST',
+                dataType:'json',
+                cache:false,
+                data:str,
+                success:function(data){
+                    if(data){
+
+                        $('#model').children('option:not(:first)').remove();
+                        $.each(data,function(key,val){
+                            $('<option value="'+val.id+'">'+val.p_series+' ' +val.p_number+'</option>').appendTo('#model');
+                        })
+
+                    }
+
+
+                }
+            })
+
+        });
+
+        var tableModelId;//для того чтобы было доступно значение из  $('#model').change в
+/*событие на изменения в select  с #model*/
+        $('#model').change(function() {
+
+            tableModelId=$(this).val();//value из option в котором содержится модель принтера $('#sendIt').click
+           if(tableModelId){
+               $('#sendIt').removeAttr('disabled');
+
+           }
+            else{
+               $('#sendIt').attr('disabled','disabled');
+           }
+        });
+        $('#sendIt').click(function() {
+            if(tableModelId){
+
+                $.ajax({
+                    url:'user/getmodels',
+                    type:'POST',
+                    dataType:'json',
+                    cache:false,
+                    data:{idModel:tableModelId},
+                    success:function(data){
+                        if(data){
+                            if(flag){
+                                $('<table id="tableResult" class="table table-bordered"></table>').appendTo('#result');
+                                $('<tr class="success"><th>длинный номер картриджа</th><th>короткий номер картриджа</th><th>описание картриджа</th><th>серия принтера</th><th>номер принтера</th></tr>').appendTo('#tableResult');
+                                flag=!flag;
+                            }
+
+
+
+
+                            $.each(data,function(key,val){
+                                $('<tr><td>'+val.long_number+'</td><td>'+val.short_number+'</td><td>'+val.c_description+'</td><td>'+val.p_series+'</td><td>'+val.p_number+'</td>').appendTo('#tableResult');
+
+                            })
+
+
+                        }
+
+
+                    }
+                })
+            }
+            tableModelId='';
+        });
+
+
+
+    });
+</script>
+<!--<script id='typeTmpl' type="text/x-jquery-tmpl">
+    <option value="1">{}</option>
+     $('#typeTmpl').tmpl(val).appendTo('#type');
+</script>-->
