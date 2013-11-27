@@ -1,0 +1,19 @@
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $.ajax({
+            url:'filework',
+            type:'POST',
+            dataType:'json',
+            cache:false,
+            data:{flag:'start'}
+
+        })
+    });
+</script>
+<?php
+/**
+ * User: Renat Osmanov
+ * Email: rhenium.osmium@gmail.com
+ */
+echo $param;
