@@ -124,6 +124,10 @@ public function getAllDataFromCurrentUrl(){
 
 
             }
+            if($descriptionCandidate=strstr($description," для",true)){
+                $description=$descriptionCandidate;
+            }
+
             $links[]=str_replace(' ','%20',$linkLocal);
             $link=str_replace(' ','%20',$linkLocal);
 
