@@ -124,6 +124,14 @@ public function getAllDataFromCurrentUrl(){
 
 
             }
+
+            //поз. последнего вхождение слова ' для'.
+            $pos=strripos($description, " для");
+            if($pos!==false){
+                $description=substr($description,0,$pos);//вырезаем от  0 до поз. $pos
+            }
+
+
             $links[]=str_replace(' ','%20',$linkLocal);
             $link=str_replace(' ','%20',$linkLocal);
 
