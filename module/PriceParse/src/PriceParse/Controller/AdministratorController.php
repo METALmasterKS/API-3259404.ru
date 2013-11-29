@@ -118,6 +118,7 @@ class AdministratorController extends AbstractActionController
      * @return JsonModel
      */
     public function fileWorkAction(){
+	ini_set('max_execution_time', 60*60);
         $request=$this->getRequest();
         if($request->isXmlHttpRequest()){
             $flag=$request->getPost('flag');
