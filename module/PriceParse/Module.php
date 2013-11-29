@@ -11,6 +11,7 @@ namespace PriceParse;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\ModuleManager\ModuleManager;
 
 class Module
 {
@@ -35,5 +36,12 @@ class Module
                 ),
             ),
         );
+    }
+    public function init(ModuleManager $moduleManager) {
+        $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
+        $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($e) {
+                $controller = $e->getTarget();
+                $controller->layout('childrenLayout');
+            }, 100);
     }
 }

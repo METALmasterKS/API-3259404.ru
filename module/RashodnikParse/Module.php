@@ -16,8 +16,12 @@ use Zend\Mvc\MvcEvent;
 use RashodnikParse\Model\PrinterModel;
 use RashodnikParse\Model\AdminModel;
 
+
+use Zend\ModuleManager\ModuleManager;
 class Module
 {
+
+
     /*public function onBootstrap(MvcEvent $e)
     {
         $eventManager        = $e->getApplication()->getEventManager();
@@ -63,5 +67,12 @@ class Module
 
 
         );
+    }
+    public function init(ModuleManager $moduleManager) {
+        $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
+        $sharedEvents->attach(__NAMESPACE__, 'dispatch', function($e) {
+                $controller = $e->getTarget();
+                $controller->layout('childrenLayout');
+            }, 100);
     }
 }

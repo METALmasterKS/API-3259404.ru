@@ -1,0 +1,28 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('3259404.ru API');?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+
+        <style type="text/css">
+            li{
+                margin-top: 15px;
+            }
+        </style>
+
+    </head>
+    <body>
+<h2>Home 3259404.ru API</h2>
+
+            <?php echo $this->content; echo $this->navigation('navigation')->menu(); ?>
+
+
+    </body>
+</html>

@@ -1,4 +1,58 @@
-<?php $form->prepare(); // The correct enctype is set here ?>
+<h2>Парсим цены товаров по артикулу из загруженного Excel файла.</h2>
+<?php
+$user = array(
+    'Проверьте пожалуйста загружаемый Excel,в нем могут присутствовать только коды конкурентов под номерами:',
+    array(
+        '17400(http://www.zhivojoffice.ru)',
+        '17402(http://www.globaltrading.ru)',
+        '17403(http://www.ofisshop.ru)',
+        '17404(http://Kshop.ru)',
+        '17405(http://www.komus.ru)',
+        '17646(http://www.shop.kostyor.ru)',
+    ),
+    'Проверьте последовательность столбцов в Excel:',
+    array(
+       'A1:Код товара по 1С.',
+       'B1:Код конкурента.',
+       'C1:Артикул конкурента.',
+       'D1:Цена продажи.',
+    ),
+    'Заголовки для столбцов не обязательны,в этом случае оставьте первую строку в Excel пустой.'
+);
+$developer=array(
+    'AdministratorController',
+        array(
+            'indexAction',
+                array('показываем форму при Get','отправляем форму POST','валидация(см. UploadForm::addInputFilter) на размер загружаемого файла(1Мегабайт) и на почтовые адреса администратора.',array(
+                    'валидация успех: сохраняем файл в папку под именем "./data/price_data_test.xls",создаем сессию "user::email" куда записываем почтовый адрес введенный в input,редирект на messageAction',
+                    'не успех: редирект на errorAction',
+                )),
+            'messageAction',
+                array('переход на view-message.phtml,дергаем из view через AJAX  AdministratorController::fileWorkAction(),пользователю показываем сообщение что файл выслан','замутка с AJAX нужна потому что при долгом выполении кода приходит 504 заголовок в ответ с хоста,но код продолжает работать,чтобы никого не смущать сделали такую штуку'),
+            'fileWorkAction',
+                array('создаем новый объект класса FileModel() тем самым получаем PHP массив данных из excel файла,приводим этот массив в нужный для метода  letsParseWorkingLinks вид.','вызываем метод FileModel::letsParseWorkingLinks() по подготовленному массиву переданного из конструктора FileModel(),парсим ресурсы,отправляем результат почту')
+        ),
+);
+
+?>
+<h3>Инструкция по применению:</h3>
+<?php
+    echo $this->htmlList($user);
+
+?>
+<h3>Инструкция для разработчиков:</h3>
+
+<?php
+    echo $this->htmlList($developer);
+?>
+
+<hr/>
+
+
+
+
+<?php
+$form->prepare(); // The correct enctype is set here ?>
 <?php echo $this->form()->openTag($form); ?>
 
     <div class="form-element">
@@ -13,6 +67,7 @@
 
 <?php echo $this->form()->closeTag(); ?>
 <?php
+
 
 //
 //$form->setAttribute('action',

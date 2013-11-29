@@ -1,0 +1,33 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle('3259404.ru API');?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+       
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+          
+            ->prependFile($this->basePath() . '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+          
+        ; ?>
+
+    </head>
+    <body>
+
+<?php
+$urlHome=$this->url('home');
+echo "<a href='".$urlHome."'>Вернуться</a> на главную.";
+?>
+            <?php echo $this->content; ?>
+          
+       
+    </body>
+</html>

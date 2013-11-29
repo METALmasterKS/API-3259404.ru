@@ -60,6 +60,9 @@ return array(
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),
+        'factories' => array(
+            'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory',
+        ),
     ),
     'translator' => array(
         'locale' => 'en_US',
@@ -83,7 +86,8 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layout'           => __DIR__ . '/../view/layout/layoutHome.phtml',
+            'childrenLayout'          => __DIR__ . '/../view/layout/layoutChildren.phtml',
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
@@ -97,6 +101,29 @@ return array(
         'router' => array(
             'routes' => array(
             ),
+        ),
+    ),
+
+    'navigation' => array(
+        'default' => array(
+            array(
+                'label' => 'инструкция по JSON с rashodnik.net',
+                'route' => 'rashodnik',
+                'pages' => array(
+                    array(
+                        'label'      => 'Страница с кнопкой на обновление с rashodnik.net',
+                        'route'     => 'rashodnik/default',
+                        'controller' => 'admin',
+                        'action'     => 'update',
+                    ),
+
+                ),
+            ),
+            array(
+                'label' => 'парсинг цен по Excel',
+                'route' => 'price',
+            ),
+
         ),
     ),
 );
