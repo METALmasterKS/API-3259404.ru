@@ -39,12 +39,6 @@ class PrinterModel  extends AbstractTableGateway implements ServiceLocatorAwareI
        return ModelHelpers::prepareExecuteResultFromOneDimensionalArrayChangeKey($this->_sql,$select,'p_brand','name');
 
     }
-//todo проверка,удалить
-    public function getBrandsOnChange(){
-        $select=$this->_sql->select('printers_brands')
-            ->order('p_brand ASC');
-        return ModelHelpers::prepareExecuteResultFromOneDimensionalArrayChangeKey($this->_sql,$select,'p_brand','name');
-    }
 
     public function getPrinterTypes($id){
         /*запросы в printers_models table*/
@@ -200,6 +194,21 @@ class PrinterModel  extends AbstractTableGateway implements ServiceLocatorAwareI
         $select->columns(array(new Expression('DISTINCT(printers_series.id) as id')));
 //        return ModelHelpers::prepareExecuteResultValueToKey($this->_sql,$select,'id','p_series');
         return ModelHelpers::prepareExecuteResultFromOneDimensionalArrayChangeKey($this->_sql,$select,'p_series','name');
+    }
+
+    /*получение моделей принтеров по long_number картриджей*/
+    public function getPrecisionPrintersForLongNumber($longNum){
+        $select = $this->_sql->select();
+        $select->from('printers_models')
+            ->join(array('right_sequence'=>'right_sequence'),'printers_models.id=right_sequence.p_model',array())
+            ->join(array('printers_series'=>'printers_series'),'printers_models.p_series=printers_series.id',array('p_series'))
+            ->join(array('printers_brands'=>'printers_brands'),'printers_models.p_brand=printers_brands.id',array('p_brand'))
+            ->join(array('cartridges_type'=>'cartridges_type'),'printers_models.c_type=cartridges_type.id',array('c_type'))
+            ->join(array('cartridges_models'=>'cartridges_models'),'right_sequence.c_model=cartridges_models.id',array())
+            ->where(array('cartridges_models.long_number'=>$longNum))
+            ->columns(array('id','p_number'));
+
+        return ModelHelpers::prepareExecuteResultFromOneDimensionalArray($this->_sql,$select);
     }
 
 

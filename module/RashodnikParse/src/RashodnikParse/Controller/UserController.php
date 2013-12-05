@@ -149,6 +149,24 @@ class UserController extends AbstractActionController
 
 
     }
+    /*получаем модели принтеров по long_number картриджей*/
+    public function getPrintersForLongNumberAction(){
+        $request=$this->getRequest();
+        if($request->isXmlHttpRequest()){
+            $longNum=(string)$request->getPost('longNum');
+            if(!empty($longNum)){
+
+                $printerModel=$this->getServiceLocator()->get('RashodnikParse\Model\PrinterModel');
+                $dataToClient=$printerModel->getPrecisionPrintersForLongNumber($longNum);
+            }
+            else{
+                $dataToClient=array('ERROR-check longNum on client side');
+            }
+            $result = new JsonModel($dataToClient);
+            return $result;
+
+        }
+    }
 
 }
 
