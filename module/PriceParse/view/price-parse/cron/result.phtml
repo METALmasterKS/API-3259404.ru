@@ -1,0 +1,27 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+            url:'selectOnCronResult',
+            type:'POST',
+            dataType:'json',
+            cache:false,
+            data:{flag:'select'},
+            success: function(data){
+                $('#result').empty();
+                $("#result").append('<h1><a  href="<?php echo $this->url('cron', array('action' => 'download')); ?>">Скачать файл с крона</a></h1>');
+
+            }
+
+
+        })
+
+    });
+</script>
+<div id="result">
+<h1>
+    <?php
+     echo $message;
+    ?>
+</h1>
+    </div>
+<!--<a  href="--><?php //echo $this->url('cron', array('action' => 'download')); ?><!--">Скачать</a>-->

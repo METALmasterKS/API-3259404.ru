@@ -16,12 +16,23 @@ use Zend\Mvc\MvcEvent;
 use RashodnikParse\Model\PrinterModel;
 use RashodnikParse\Model\AdminModel;
 
-
+use Zend\ModuleManager\Feature\ConsoleBannerProviderInterface;
+use Zend\Console\Adapter\AdapterInterface as Console;
 use Zend\ModuleManager\ModuleManager;
-class Module
+class Module implements ConsoleBannerProviderInterface
 {
 
-
+    /**
+     * This method is defined in ConsoleBannerProviderInterface
+     */
+    public function getConsoleBanner(Console $console){
+        return
+            "==------------------------------------------------------==\n" .
+            "        Welcome to ZF2 Update app                         \n" .
+            "==------------------------------------------------------==\n" .
+            "Version 0.0.1\n"
+            ;
+    }
     /*public function onBootstrap(MvcEvent $e)
     {
         $eventManager        = $e->getApplication()->getEventManager();

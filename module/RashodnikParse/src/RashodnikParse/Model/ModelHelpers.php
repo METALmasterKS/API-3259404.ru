@@ -36,7 +36,7 @@ class ModelHelpers
     *это нужно для формирования JSON
     */
 
-    protected static function prepareExecuter($sql, $select)
+    public static function prepareExecuter($sql, $select)
     {
         $statement = $sql->prepareStatementForSqlObject($select);
         $results = $statement->execute();

@@ -15,7 +15,7 @@ echo $this->form()->closeTag($form);
 <div id='result'></div>
 <script type="text/javascript">
 
-    $(document).ready(function(){	
+    $(document).ready(function(){
         var flag=true;
     /*при повторной загрузке F5*/
         //выбираем по умолчанию первый option из  #brand
@@ -47,13 +47,16 @@ var UserChoice=[];//массив в который будет приходить
                 //UserChoice.push(tableId,tableBrand);
                 UserChoice.push(tableId);
                 $.ajax({
-                    url:'user/gettypes',
+                    url:'user/getprintersforlongnumber',
+				   // url:'user/getConvertDataAfterTextLangCorrect',
                     type:'POST',
                     dataType:'json',
                     cache:false,
-                    data:{id:tableId},
+                    data:{longNum:'TN-03M'},
+					// data:{stringQuery:'[kt,'},
                     success:function(data){
                         if(data){
+						//alert(data);
                             $('#type').removeAttr('disabled');
                             $('#model').removeAttr('disabled');
 
@@ -144,7 +147,7 @@ function getBrandChoice(){
             if(tableModelId){
 
                 $.ajax({
-                    url:'user/getmodels',
+                    url:'user/getcartridges',
                     type:'POST',
                     dataType:'json',
                     cache:false,

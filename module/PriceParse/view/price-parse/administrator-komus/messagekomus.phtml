@@ -1,22 +1,22 @@
 <script type="text/javascript">
-var allRows=0;
-var res=0;
+    var allRows=0;
+    var res=0;
     $(document).ready(function(){
-        $.ajax({
-            url:'filework',
+      $.ajax({
+            url:'fileworkkomus',
             type:'POST',
             dataType:'json',
             cache:false,
-            data:{flag:'create'},
+            data:{flag:'create_komus'},
             success: function(data){
-               // $("#progress-bar").append("I");
+                // $("#progress-bar").append("I");
                 if (data[0] == "table_from_file_was_created") {
                     //repeat_import();
                     //alert(data[1]);
                     allRows=data[1]-0;
                     res=allRows;
-                    $("#progress-bar").html("<h1>Осталось спарсить "+res+" шт. строк</h1>");
-                    repeat_import();
+                    $("#progress-bar").html("<h1>Осталось спарсить "+res+" шт. строк КОМУСА</h1>");
+                   // repeat_import();
                 }
                 else {
                     alert('Error on start');
@@ -25,16 +25,17 @@ var res=0;
 
 
         })
+		
 
     });
     function repeat_import() {
         $.ajax({
-            url: "filework",
+            url: "fileworkkomus",
             type:'POST',
             dataType:'json',
             cache:false,
-            data:{flag:'insert_parse_data'},
-         //   data:{flag:'dump_table'},
+            data:{flag:'insert_parse_data_komus'},
+            //   data:{flag:'dump_table'},
             //timeout: 50000,
             success: function(data){
 
@@ -42,7 +43,7 @@ var res=0;
                     res=0;
                 }
                 if(data=='deleted'){
-                    alert('Ваш загруженный файл кто-то удалил!!!Закройте браузер и сново войдите на http://22.zavhoza.z8.ru/price');
+                    alert('Ваш загруженный файл КОМУСА кто-то удалил!!!Закройте браузер и сново войдите на http://22.zavhoza.z8.ru/price');
                 }
 
                 if (data == "in_the_process") {
@@ -51,16 +52,16 @@ var res=0;
                         res=0;
                     }
                     $('h1').empty();
-                    $("h1").html("Осталось спарсить "+res+" шт. строк");
+                    $("h1").html("Осталось спарсить "+res+" шт. строк КОМУСА");
                     repeat_import();
                 }
 
-              if(data == "complete"){
-                   // alert('таблица готова');
+                if(data == "complete"){
+                    // alert('таблица готова');
                     $('h1').empty();
-                    $("h1").html("Осталось спарсить "+res+" шт. строк.Таблица готова");
+                    $("h1").html("Осталось спарсить "+res+" шт. строк КОМУСА.Таблица готова");
                     get_result_parse();
-              }
+                }
 
             },
             //todo если будет ошиька то не совсем точно
@@ -75,12 +76,12 @@ var res=0;
     }
     function get_result_parse(){
         $.ajax({
-            url: "filework",
+            url: "fileworkkomus",
             type:'POST',
             dataType:'json',
             cache:false,
 
-            data:{flag:'dump_table'},
+            data:{flag:'dump_table_komus'},
 
             success: function(data){
 
@@ -93,8 +94,10 @@ var res=0;
 </script>
 <?php
 /**
+ * Created by PhpStorm.
  * User: Renat Osmanov
  * Email: rhenium.osmium@gmail.com
+ * Date: 17.12.13
  */
 echo $param;
 ?>

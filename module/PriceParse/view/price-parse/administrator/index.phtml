@@ -49,8 +49,60 @@ $developer=array(
 <hr/>
 
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        checkLiveFiles();
+    });
+
+function checkLiveFiles(){
+    $.ajax({
+        url:'price/checkissetfile',
+        type:'POST',
+        dataType:'json',
+        cache:false,
+        data:{flag:'check'},
+        success: function(data){
+            // $("#progress-bar").append("I");
+            if (data == "not_empty_dir") {
+                $("#reset").attr("disabled", false);
+                $("#reset").click(function(){
+                    main_deleter();
+                });
+            }
+            else{
+                $("#reset").attr("disabled", true);
+            }
+
+        }
 
 
+    });
+}
+
+function main_deleter(){
+    $.ajax({
+        url:'price/deletealldata',
+        type:'POST',
+        dataType:'json',
+        cache:false,
+        data:{flag:'parse_competitors_prices'},
+        success: function(data){
+            // $("#progress-bar").append("I");
+            if (data == "ok") {
+                checkLiveFiles();
+            }
+            else{
+               alert('ошибка!');
+            }
+
+        }
+
+
+    });
+}
+</script>
+
+<button disabled="disabled" id="reset">очистить от старых файлов</button>
 <?php
 $form->prepare(); // The correct enctype is set here ?>
 <?php echo $this->form()->openTag($form); ?>

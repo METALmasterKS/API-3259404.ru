@@ -61,13 +61,47 @@ return array(
                     ),
                 ),
             ),
+            'komus'=>array(
+                'type'=>'segment',
+                'options'=>array(
+                    'route'=>'/komus[/:action][/:id]',
+
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults'    => array(
+                        'controller' => 'PriceParse\Controller\AdministratorKomus',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'cron'=>array(
+                'type'=>'segment',
+                'options'=>array(
+                    'route'=>'/cron[/:action][/:id]',
+
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults'    => array(
+                        'controller' => 'PriceParse\Controller\Cron',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
         ),
+
+
     ),
 
 
     'controllers' => array(
         'invokables' => array(
-            'PriceParse\Controller\Administrator' => 'PriceParse\Controller\AdministratorController'
+            'PriceParse\Controller\Administrator' => 'PriceParse\Controller\AdministratorController',
+            'PriceParse\Controller\AdministratorKomus' => 'PriceParse\Controller\AdministratorKomusController',
+            'PriceParse\Controller\Cron' => 'PriceParse\Controller\CronController',
         ),
     ),
 
@@ -76,6 +110,7 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+
     ),
 
 );

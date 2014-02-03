@@ -1,0 +1,42 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.ajax({
+            url:'putfilemaskintotableindb',
+            type:'POST',
+            dataType:'json',
+            cache:false,
+            data:{flag:'komus'},
+           // data:{flag:'all'},
+            success: function(data){
+                // $("#progress-bar").append("I");
+                if (data[0] == "created") {
+                    //repeat_import();
+                    //alert(data[1]);
+                    allRows=data[1]-0;
+                    res=allRows;
+                   // alert("Вы загрузили для крона "+res+" шт. строк КОМУСА");
+                    //todo удалить загруженный файл и там уже вывести спасибо
+                    $('h1').empty();
+                    $("#progress-bar").html("<h1>Вы загрузили для крона "+res+" шт. строк КОМУСА.Спасибо!</h1>");
+
+                }
+                else {
+                    alert('Error on start');
+                }
+            }
+
+
+        })
+
+    });
+</script>
+<h1><?php echo $message;?></h1>
+<div id="progress-bar">
+</div>
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Renat Osmanov
+ * Email: rhenium.osmium@gmail.com
+ * Date: 19.12.13
+ */

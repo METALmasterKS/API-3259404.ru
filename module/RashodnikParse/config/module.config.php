@@ -51,6 +51,31 @@ return array(
             ),
         ),
     ),
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'show-users' => array(
+                    'options' => array(
+                        'route'    => 'update [--all|-a] rashodniki',
+                        'defaults' => array(
+                            'controller' => 'RashodnikParse\Controller\Admin',
+                            'action'     => 'console'
+                        )
+                    )
+                ),
+                'cron-slave' => array(
+                        'options' => array(
+                            'route'    => 'price parse (--start) (komus|all)',
+                            'defaults' => array(
+                                '__NAMESPACE__' => 'PriceParse\Controller',
+                                'controller' => 'Cron',
+                                'action'     => 'cron',
+                            )
+                        )
+                    ),
+            )
+        )
+    ),
     'view_manager' => array(
 
         'template_path_stack' => array(

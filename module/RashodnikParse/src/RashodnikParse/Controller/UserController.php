@@ -45,6 +45,21 @@ class UserController extends AbstractActionController
 
     }
 
+    //todo проверка удалить
+    public function getBrandsOnChangeAction(){
+        $request=$this->getRequest();
+        if($request->isXmlHttpRequest()){
+
+            $printerModel=$this->getServiceLocator()->get('RashodnikParse\Model\PrinterModel');
+            $dataFromDB=$printerModel->getBrandsOnChange();
+            $result = new JsonModel($dataFromDB);
+
+            return $result;
+
+        }
+
+    }
+
 
 
     /*получаем типы принтеров по номеру бренда,для передачи через AJAX в массиве из JSON*/
@@ -149,6 +164,7 @@ class UserController extends AbstractActionController
 
 
     }
+//UserController::getPrintersForLongNumberAction ответ JSON вида: [{"id":"4","p_number":"2600","p_series":"HL","p_brand":"Brother","c_type":"Лазерный"}]
     /*получаем модели принтеров по long_number картриджей*/
     public function getPrintersForLongNumberAction(){
         $request=$this->getRequest();
@@ -167,6 +183,24 @@ class UserController extends AbstractActionController
 
         }
     }
+	
+	   /*получаем данные обработанные в библиотеке TextLangCorrect*/
+   public function getConvertDataAfterTextLangCorrectAction(){
+       $request=$this->getRequest();
+       if($request->isXmlHttpRequest()){
+           $stringQuery=(string)$request->getPost('stringQuery');
+           if(!empty($stringQuery)){
+               $corrector=new \Text_LangCorrect();
+               $dataToClient=$corrector->parse($stringQuery,$corrector::KEYBOARD_LAYOUT);
+           }
+           else{
+               $dataToClient=array('ERROR-check stringQuery');
+           }
+           $result = new JsonModel(array($dataToClient));
+           return $result;
+
+       }
+   }
 
 }
 

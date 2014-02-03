@@ -31,6 +31,7 @@ class UploadForm extends Form
              ->setAttribute('id','admin-email');
         $this->add($email);
 
+      
     }
     public function addInputFilter()
     {
@@ -40,7 +41,8 @@ class UploadForm extends Form
         //Email Input
         $emailInput=new InputFilter\Input('admin-email');
         $emailInput->getValidatorChain()
-            ->attachByName('inArray', array('haystack'=>array('007@3259404.ru','metalmaster.kustovstas@gmail.com','rhenium.osmium@gmail.com')));//стек из допустимых email адресов
+            ->attachByName('inArray', array('haystack'=>array('007@3259404.ru','metalmaster.kustovstas@gmail.com','rhenium.osmium@gmail.com','gifttop@gmail.com')));//стек из допустимых email адресов
+           // ->attachByName('inArray', array('haystack'=>array('rhenium.osmium@gmail.com')));//стек из допустимых email адресов
         $inputFilter->add($emailInput);
 
         // File Input
@@ -49,7 +51,7 @@ class UploadForm extends Form
 
 
         $fileInput->getValidatorChain()
-            ->attachByName('filesize',      array('max' => 100000));//1М макс
+            ->attachByName('filesize',      array('max' => 10000000));//1М макс
 
 
 

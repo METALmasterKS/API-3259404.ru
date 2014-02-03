@@ -1,0 +1,34 @@
+<h2>Парсинг по комусу</h2>
+<?php
+$form->prepare(); // The correct enctype is set here ?>
+<?php echo $this->form()->openTag($form); ?>
+
+<div class="form-element">
+    <?php $fileElement = $form->get('excel-file'); ?>
+    <?php echo $this->formLabel($fileElement); ?>
+    <?php echo $this->formFile($fileElement); ?>
+    <?php echo $this->formElementErrors($fileElement); ?>
+    <?php echo $this->formRow($form->get('admin-email'));?>
+</div>
+
+<button>Submit</button>
+
+<?php echo $this->form()->closeTag(); ?>
+<?php
+
+
+//
+//$form->setAttribute('action',
+//    $this->url('price', //your route name ...
+//        array('controller'=>'administrator', 'action' => 'index')));
+//$form->prepare();
+//
+//echo $this->form()->openTag($form);
+//echo $this->formRow($form->get('admin-email'));
+//
+//echo $this->formRow($form->get('excel-file'));
+//
+////echo $this->formSubmit($form->get('submit'));
+//echo $this->form()->closeTag();
+?>
+

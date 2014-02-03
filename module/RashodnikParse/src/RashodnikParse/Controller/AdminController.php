@@ -20,8 +20,10 @@ use Zend\Console\Request as ConsoleRequest;
 class AdminController extends AbstractActionController
 {
 
-        public function indexAction()
-    { 
+
+
+    public function indexAction()
+    {
         return new ViewModel(array());
     }
 

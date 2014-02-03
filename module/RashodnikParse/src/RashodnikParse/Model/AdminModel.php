@@ -14,7 +14,7 @@ use RashodnikParse\RenatsClassesLib\Db;
 
 
 class AdminModel  extends AbstractTableGateway implements ServiceLocatorAwareInterface{
-    protected $_sql;
+    public $_sql;
     protected $_serviceLocator;
     public function __construct(Sql $sql){
         $this->_sql=$sql;
@@ -66,7 +66,7 @@ class AdminModel  extends AbstractTableGateway implements ServiceLocatorAwareInt
 
 
 /*добавление в БД*/
-    private function putInDb($table,array $values){
+    public  function putInDb($table,array $values){
         $insert=$this->_sql->insert($table);
         $insert->values($values);
         $statement = $this->_sql->prepareStatementForSqlObject($insert);
