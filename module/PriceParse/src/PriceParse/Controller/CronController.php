@@ -242,14 +242,14 @@ class CronController extends AbstractActionController
             $this->downloadKomusPriceFromFtp($adminModel);
 
         }
-/*
+
         $request = $this->getRequest();
         if($request->isGet()){
                 $cronModel= new CronModel($adminModel);
                 $statusMessage=$cronModel->setStatusAnswer('komus');
                 $cronModel->chooseFutureCronMoon($statusMessage);
         }
-*/
+
         return false;
     }
 	
@@ -291,7 +291,7 @@ class CronController extends AbstractActionController
             $statusMessage=$cronModel->setStatusAnswer('all');
             $cronModel->chooseFutureCronMoon($statusMessage);
         }
-		
+
         return false;
     }
 
