@@ -2,3 +2,4 @@
 /data
 .ht*
 /config/autoload/*
+/.idea
