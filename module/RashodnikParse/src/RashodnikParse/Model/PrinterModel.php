@@ -31,19 +31,13 @@ class PrinterModel  extends AbstractTableGateway implements ServiceLocatorAwareI
      * setValueOptions()
      * */
     public function getBrands(){
-        $select=$this->_sql->select('printers_brands');
+/*        $select=$this->_sql->select('printers_brands');
         $dataFromDB=ModelHelpers::prepareExecuteResultValueToKey($this->_sql,$select,'id','p_brand');
-        return $dataFromDB;
-/*        $select=$this->_sql->select('printers_brands')
-            ->order('p_brand ASC');
-       return ModelHelpers::prepareExecuteResultFromOneDimensionalArrayChangeKey($this->_sql,$select,'p_brand','name');*/
-
-    }
-//todo проверка,удалить
-    public function getBrandsOnChange(){
+        return $dataFromDB;*/
         $select=$this->_sql->select('printers_brands')
             ->order('p_brand ASC');
-        return ModelHelpers::prepareExecuteResultFromOneDimensionalArrayChangeKey($this->_sql,$select,'p_brand','name');
+       return ModelHelpers::prepareExecuteResultFromOneDimensionalArrayChangeKey($this->_sql,$select,'p_brand','name');
+
     }
 
     public function getPrinterTypes($id){
@@ -201,7 +195,6 @@ class PrinterModel  extends AbstractTableGateway implements ServiceLocatorAwareI
 //        return ModelHelpers::prepareExecuteResultValueToKey($this->_sql,$select,'id','p_series');
         return ModelHelpers::prepareExecuteResultFromOneDimensionalArrayChangeKey($this->_sql,$select,'p_series','name');
     }
-
 
     /*получение моделей принтеров по long_number картриджей*/
     public function getPrecisionPrintersForLongNumber($longNum){

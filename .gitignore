@@ -1,4 +1,4 @@
 /vendor
-/data/cache/*
+/data
 .ht*
 /config/autoload/*
